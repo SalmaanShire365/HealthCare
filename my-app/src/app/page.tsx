@@ -6,7 +6,7 @@ export default function Home() {
     <div>
       <Navbar/>
       <Hero/>
-      {/* <Services/> */}
+      <Services/>
 
     </div>
     
