@@ -1,21 +1,12 @@
+/* globals.css */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-
-
+/* Global styles */
 body {
-    font-family: 'Roboto', sans-serif; /* Example: Set a global font-family */
-    background-color:black;
-  }
-  
-  
-
-  
-  .hero-section {
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-  }
+  font-family: 'Roboto', sans-serif; /* Set a global font-family */
+  background-color: black; /* Set a global background color */
+  margin: 0; /* Reset default margin */
+  line-height: 1.6; /* Set a global line-height */
+}
