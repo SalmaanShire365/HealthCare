@@ -1,9 +1,10 @@
 "use client";
 import React from 'react';
 import { ReactTyped} from 'react-typed';
-
+import GetStartedButton from './buttons/GetStartedButton'
 const HeroSection = () => {
   return (
+  <section id='home'>
   <div className='text-white'>
     <div className='max-w-[800px] mt-[-96px] w-full h-screen mx-auto text-center flex flex-col justify-center'>
       <p className='text-[#00df9a] font-bold p-2'>Alpha Quality Health Care</p>
@@ -20,10 +21,13 @@ const HeroSection = () => {
             loop
         ></ReactTyped>
       </div>
+      <div> 
       <p className='md:text-2xl text-xl font-bold text-gray-500'>Emergency assistance for Disability Waiver recipients providing on-call counseling and immediate home response.</p>
-      <button className='bg-[#00df9a] w-[200px] rounded-md font-medium my-6 mx-auto py-3 text-black'>Get Started</button>
+      <GetStartedButton />
+    </div>
     </div>
   </div>
+  </section>
   );
 };
 

@@ -14,6 +14,7 @@ const links = [
   
   export default function Header() {
     return (
+      < section id='contact'>
       <div className="relative isolate overflow-hidden bg-gray-900 py-24 sm:py-32">
         <Image
           alt=""
@@ -73,6 +74,7 @@ const links = [
           </div>
         </div>
       </div>
+      </section>
     )
   }
   
