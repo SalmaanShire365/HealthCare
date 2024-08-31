@@ -1,8 +1,9 @@
-import Navbar from './Navbar.jsx'
-import Hero from './Hero.jsx'
-import Services from  './Services.jsx'
-import Header from './Header.jsx'
-import Footer from './Footer.jsx'
+import Hero from './components/Hero.jsx'
+import Navbar from './components/Navbar.jsx'
+import Services from  './components/Services.jsx'
+import Header from './components/Header.jsx'
+import Footer from './components/Footer.jsx'
+import ServicesDetails from './components/ServiceDetails.jsx'
 export default function Home() {
   return (
     <div className="min-h-screen flex flex-col">
@@ -11,6 +12,7 @@ export default function Home() {
         <Hero />
         <Services />
         <Header />
+        <ServicesDetails />
       </main>
       <Footer />
     </div>

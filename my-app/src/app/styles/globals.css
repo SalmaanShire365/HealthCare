@@ -9,7 +9,10 @@ body {
     background-color:black;
   }
   
-  
+  img {
+    max-width: 100%; /* Ensure image doesn’t overflow container */
+    height: auto; /* Maintain aspect ratio */
+  }
 
   
   .hero-section {

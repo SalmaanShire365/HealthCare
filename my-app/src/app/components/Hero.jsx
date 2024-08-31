@@ -1,7 +1,7 @@
 "use client";
 import React from 'react';
 import { ReactTyped} from 'react-typed';
-import GetStartedButton from './buttons/GetStartedButton'
+import GetStartedButton from '../buttons/GetStartedButton.jsx'
 const HeroSection = () => {
   return (
   <section id='home'>
