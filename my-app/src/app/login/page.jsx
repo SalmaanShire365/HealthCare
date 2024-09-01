@@ -1,6 +1,51 @@
+'use client';
+import { useState } from 'react';
 import Image from 'next/image';
 
-export default function Example() {
+export default function LoginPage() {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
+  const [success, setSuccess] = useState('');
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+
+    // Reset state
+    setError('');
+    setSuccess('');
+
+    // Validate inputs (basic example)
+    if (!email || !password) {
+      setError('Both email and password are required.');
+      return;
+    }
+
+    try {
+      const res = await fetch('/api/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email, password }),
+      });
+
+      const data = await res.json();
+
+      if (res.ok) {
+        setSuccess('Login successful!');
+        // Handle successful login (e.g., redirect to another page)
+      } else {
+        setError(data.error || 'Something went wrong');
+      }
+    } catch (error) {
+      setError('Something went wrong');
+    }
+    console.log('Submitted Data:');
+    console.log('Email:', email);
+    console.log('Password:', password);
+  };
+
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100 px-4 py-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
@@ -16,7 +61,17 @@ export default function Example() {
         </h2>
 
         <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
-          <form action="#" method="POST" className="space-y-6">
+          <form onSubmit={handleSubmit} className="space-y-6">
+            {error && (
+              <div className="text-red-600 text-center">
+                <p>{error}</p>
+              </div>
+            )}
+            {success && (
+              <div className="text-green-600 text-center">
+                <p>{success}</p>
+              </div>
+            )}
             <div>
               <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900">
                 Email address
@@ -26,6 +81,8 @@ export default function Example() {
                   id="email"
                   name="email"
                   type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                   required
                   autoComplete="email"
                   className="block w-full rounded-md border-0 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm"
@@ -49,6 +106,8 @@ export default function Example() {
                   id="password"
                   name="password"
                   type="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
                   required
                   autoComplete="current-password"
                   className="block w-full rounded-md border-0 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm"
@@ -69,7 +128,7 @@ export default function Example() {
           <p className="mt-8 text-center text-sm text-gray-500">
             Not a member?{' '}
             <a href="#" className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">
-              Start a 14 day free trial
+              Start a 14-day free trial
             </a>
           </p>
         </div>
