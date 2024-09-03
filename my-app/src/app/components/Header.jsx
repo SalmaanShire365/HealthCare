@@ -2,11 +2,9 @@ import Image from 'next/image';
 
 const links = [
     { name: 'Current Openings', href: '#' },
-    { name: 'Internship Opportunities', href: '#' },
     { name: 'Our Work Culture', href: '#' },
     { name: 'Leadership Team', href: '#' },
 ];
-
 const stats = [
     { name: 'Offices Worldwide', value: '12' },
     { name: 'Full-time Employees', value: '300+' },

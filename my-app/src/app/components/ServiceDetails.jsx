@@ -1,5 +1,6 @@
 'use client';
 import { useState } from 'react';
+import emailjs from 'emailjs-com';
 
 export default function ServiceDetails() {
     const [formData, setFormData] = useState({
@@ -19,8 +20,23 @@ export default function ServiceDetails() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        // Handle form submission logic here
-        console.log('Form submitted', formData);
+
+        emailjs.sendForm('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', e.target, 'YOUR_USER_ID')
+            .then((result) => {
+                console.log('Success:', result.text);
+                alert('Your message has been sent!');
+            }, (error) => {
+                console.error('Error:', error.text);
+                alert('There was an error sending your message. Please try again later.');
+            });
+
+        // Optionally reset the form
+        setFormData({
+            name: '',
+            email: '',
+            phone: '',
+            message: ''
+        });
     };
 
     return (

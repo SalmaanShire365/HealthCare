@@ -4,6 +4,7 @@ import Services from  './components/Services.jsx'
 import Header from './components/Header.jsx'
 import Footer from './components/Footer.jsx'
 import ServicesDetails from './components/ServiceDetails.jsx'
+import Customer from './components/Customer.jsx'
 export default function Home() {
   return (
     <div className="min-h-screen flex flex-col">
@@ -12,6 +13,7 @@ export default function Home() {
         <Hero />
         <Services />
         <Header />
+        <Customer/>
         <ServicesDetails />
       </main>
       <Footer />

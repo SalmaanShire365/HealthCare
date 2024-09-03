@@ -41,9 +41,7 @@ export default function LoginPage() {
     } catch (error) {
       setError('Something went wrong');
     }
-    console.log('Submitted Data:');
-    console.log('Email:', email);
-    console.log('Password:', password);
+    
   };
 
   return (

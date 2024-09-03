@@ -18,7 +18,9 @@ export default function Footer() {
               <li><Link href="#home" className="hover:underline">Home</Link></li>
               <li><Link href="#services" className="hover:underline">Services</Link></li>
               <li><Link href="#contact-us" className="hover:underline">Contact Us</Link></li>
+              <li><Link href="#who-we-serve" className="hover:underline">Who We Serve</Link></li>
               <li><Link href="#careers" className="hover:underline">Careers</Link></li>
+              <li><Link href="https://www.providerpal.com/#/home" className="hover:underline">Provider Pal</Link></li>
             </ul>
           </div>
 
@@ -28,7 +30,7 @@ export default function Footer() {
             <ul>
               <li className="flex items-center mb-2">
                 <PhoneIcon className="h-5 w-5 text-gray-300 mr-2" aria-hidden="true" />
-                <a href="tel:+1234567890" className="hover:underline">(612) 583-8529</a>
+                <a href="tel:+6125838529" className="hover:underline">(612) 583-8529</a>
               </li>
               <li className="flex items-center mb-2">
                 <EnvelopeIcon className="h-5 w-5 text-gray-300 mr-2" aria-hidden="true" />
@@ -36,7 +38,7 @@ export default function Footer() {
               </li>
               <li className="flex items-center mb-2">
                 <GlobeAltIcon className="h-5 w-5 text-gray-300 mr-2" aria-hidden="true" />
-                <a href="#" className="hover:underline">1020 E 146th St, Ste 107, Burnsville, MN, 55337</a>
+                <a href="https://www.google.com/maps/place/1020+E+146th+St+%23+107,+Burnsville,+MN+55337/@44.7393387,-93.2626905,17z/data=!3m1!4b1!4m6!3m5!1s0x87f63a086fab8331:0x6b57bc07d5ac17dd!8m2!3d44.7393387!4d-93.2601156!16s%2Fg%2F11mhjpz33k?entry=ttu&g_ep=EgoyMDI0MDgyOC4wIKXMDSoASAFQAw%3D%3D">1020 E 146th St, Ste 107, Burnsville, MN, 55337</a>
               </li>
             </ul>
           </div>
