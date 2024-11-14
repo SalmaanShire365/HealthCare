@@ -14,6 +14,7 @@ await client.connect();
 // Define users and passwords
 const users = [
   { email: 'salmaanshire@gmail.com', password: 'password1' },
+  { email: 'user@nextmail.com', password: '123456' },
   // Add more users here
 ];
 

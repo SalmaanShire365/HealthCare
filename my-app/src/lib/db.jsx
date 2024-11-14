@@ -1,14 +1,13 @@
-// src/lib/db.jsx
-import { Client } from 'pg';
+// lib/db.js
+import mysql from 'mysql2/promise';  // Use the promise version directly
 
-// Create a new instance of the Client class
-const client = new Client({
-  connectionString: process.env.DATABASE_URL, // Use your environment variable for the connection string
+// Create a connection with promise support
+const connection = await mysql.createConnection({
+  host: process.env.DB_HOST,
+  port: process.env.DB_PORT,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_NAME,
 });
 
-// Connect to the database
-client.connect()
-  .then(() => console.log('Database connected successfully'))
-  .catch(err => console.error('Database connection error:', err));
-
-export default client;
+export default connection;

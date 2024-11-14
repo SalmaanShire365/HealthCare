@@ -31,9 +31,11 @@ export default function LoginPage() {
       });
 
       const data = await res.json();
+      console.log(data);
 
       if (res.ok) {
         setSuccess('Login successful!');
+        router.push('./app/dashboard/page.jsx');
         // Handle successful login (e.g., redirect to another page)
       } else {
         setError(data.error || 'Something went wrong');
