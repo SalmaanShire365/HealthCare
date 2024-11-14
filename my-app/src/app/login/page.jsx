@@ -1,12 +1,15 @@
-'use client';
+'use client'; // Ensure this is at the top to mark this component as client-side
+
 import { useState } from 'react';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation'; // Import useRouter from next/navigation
 
 export default function LoginPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
+  const router = useRouter(); // Initialize useRouter
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -15,7 +18,7 @@ export default function LoginPage() {
     setError('');
     setSuccess('');
 
-    // Validate inputs (basic example)
+    // Validate inputs
     if (!email || !password) {
       setError('Both email and password are required.');
       return;
@@ -33,15 +36,15 @@ export default function LoginPage() {
       const data = await res.json();
 
       if (res.ok) {
-        setSuccess('Login successful!');
-        // Handle successful login (e.g., redirect to another page)
+        setSuccess(data.message);
+        // Redirect to another page on successful login/registration
+        router.push('/pages/dashboard'); // Replace '/home' with your desired route
       } else {
         setError(data.error || 'Something went wrong');
       }
     } catch (error) {
       setError('Something went wrong');
     }
-    
   };
 
   return (
