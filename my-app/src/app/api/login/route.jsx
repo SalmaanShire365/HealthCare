@@ -1,5 +1,5 @@
 import bcrypt from 'bcryptjs';
-import pool from '../../../lib/db'; // Adjust the import path as necessary
+import client from '../../../lib/db';
 
 export async function POST(req) {
   try {
@@ -12,43 +12,27 @@ export async function POST(req) {
       );
     }
 
-    // Check if the user exists
-    const [rows] = await pool.query('SELECT * FROM users WHERE email = ?', [email]);
-    const user = rows[0];
+    const result = await client.query('SELECT * FROM users WHERE email = $1', [email]);
+    const user = result.rows[0];
 
+    console.log('User from DB:', user); // Log the user data
     if (user) {
-      console.log('User found:', user); // Debug: Log user details
-
-      // User exists, verify password
       const isPasswordValid = await bcrypt.compare(password, user.password);
-      console.log('Password validation result:', isPasswordValid); // Debug: Log password validation result
-
+      console.log('Password valid:', isPasswordValid); // Log the result of password comparison
       if (isPasswordValid) {
         return new Response(
           JSON.stringify({ message: 'Login successful' }),
           { status: 200 }
         );
-      } else {
-        return new Response(
-          JSON.stringify({ error: 'Invalid credentials' }),
-          { status: 401 }
-        );
       }
-    } else {
-      console.log('User not found, creating new user.'); // Debug: Log when user is not found
-
-      // User does not exist, create a new user
-      const hashedPassword = await bcrypt.hash(password, 10);
-
-      await pool.query('INSERT INTO users (email, password) VALUES (?, ?)', [email, hashedPassword]);
-
-      return new Response(
-        JSON.stringify({ message: 'User registered and logged in successfully' }),
-        { status: 201 }
-      );
     }
+    
+    return new Response(
+      JSON.stringify({ error: 'Invalid credentials' }),
+      { status: 401 }
+    );
   } catch (error) {
-    console.error('Error during login or registration:', error);
+    console.error('Error during login:', error);
     return new Response(
       JSON.stringify({ error: 'Internal Server Error' }),
       { status: 500 }
