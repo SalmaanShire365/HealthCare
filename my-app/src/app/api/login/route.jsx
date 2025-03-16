@@ -1,7 +1,5 @@
-// app/api/login/route.js (or route.jsx)
-
 import bcrypt from 'bcryptjs';
-import client from '../../../lib/db';  // Your database connection file
+import { getConnection } from '../../../lib/db';  // Import the getConnection function
 import { NextResponse } from 'next/server';
 
 export async function POST(req) {
@@ -9,25 +7,29 @@ export async function POST(req) {
     // Parse the request body
     const { email, password } = await req.json();
 
+    // Check for missing email or password
     if (!email || !password) {
       return NextResponse.json({ error: 'Email and password are required' }, { status: 400 });
     }
 
+    // Get a connection from the pool
+    const connection = await getConnection();
+
     // Query the database for the user by email
-    const result = await client.query('SELECT * FROM users WHERE email = ?', [email]);
+    const [rows] = await connection.execute('SELECT * FROM users WHERE email = ?', [email]);
 
     // Log the result to check for errors
-    console.log('Query result:', result);
+    console.log('Query result:', rows);
 
     // If no user found, return an error
-    if (!result || result.length === 0) {
+    if (rows.length === 0) {
       return NextResponse.json({ error: 'Invalid credentials' }, { status: 401 });
     }
 
     // Access the first user record from the result
-    const user = result[0];
+    const user = rows[0];
 
-    // Validate password
+    // Validate the password using bcrypt
     const isPasswordValid = await bcrypt.compare(password, user.password);
     if (isPasswordValid) {
       return NextResponse.json({ message: 'Login successful' }, { status: 200 });

@@ -1,5 +1,7 @@
 'use client';
+
 import { useState } from 'react';
+import { useRouter } from 'next/navigation'; // Import useRouter
 import Image from 'next/image';
 
 export default function LoginPage() {
@@ -7,15 +9,13 @@ export default function LoginPage() {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
+  const router = useRouter();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-
-    // Reset state
     setError('');
     setSuccess('');
 
-    // Validate inputs (basic example)
     if (!email || !password) {
       setError('Both email and password are required.');
       return;
@@ -24,58 +24,37 @@ export default function LoginPage() {
     try {
       const res = await fetch('/api/login', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password }),
       });
 
       const data = await res.json();
-      console.log(data);
 
       if (res.ok) {
         setSuccess('Login successful!');
-        router.push('./app/dashboard/page.jsx');
-        // Handle successful login (e.g., redirect to another page)
+        // Redirect to dashboard on success
+        router.push('/dashboard');
       } else {
         setError(data.error || 'Something went wrong');
       }
     } catch (error) {
-      setError('Something went wrong');
+      setError('Something went wrong with the request');
     }
-    
   };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100 px-4 py-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
-        <Image
-          alt="Your Company"
-          src="/badge.png"
-          width={30}
-          height={30}
-          className="mx-auto"
-        />
+        <Image alt="Your Company" src="/badge.png" width={30} height={30} className="mx-auto" />
         <h2 className="mt-8 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
           Sign in to your account
         </h2>
-
         <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
           <form onSubmit={handleSubmit} className="space-y-6">
-            {error && (
-              <div className="text-red-600 text-center">
-                <p>{error}</p>
-              </div>
-            )}
-            {success && (
-              <div className="text-green-600 text-center">
-                <p>{success}</p>
-              </div>
-            )}
+            {error && <div className="text-red-600 text-center"><p>{error}</p></div>}
+            {success && <div className="text-green-600 text-center"><p>{success}</p></div>}
             <div>
-              <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900">
-                Email address
-              </label>
+              <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900">Email address</label>
               <div className="mt-2">
                 <input
                   id="email"
@@ -89,16 +68,11 @@ export default function LoginPage() {
                 />
               </div>
             </div>
-
             <div>
               <div className="flex items-center justify-between">
-                <label htmlFor="password" className="block text-sm font-medium leading-6 text-gray-900">
-                  Password
-                </label>
+                <label htmlFor="password" className="block text-sm font-medium leading-6 text-gray-900">Password</label>
                 <div className="text-sm">
-                  <a href="#" className="font-semibold text-indigo-600 hover:text-indigo-500">
-                    Forgot password?
-                  </a>
+                  <a href="#" className="font-semibold text-indigo-600 hover:text-indigo-500">Forgot password?</a>
                 </div>
               </div>
               <div className="mt-2">
@@ -114,7 +88,6 @@ export default function LoginPage() {
                 />
               </div>
             </div>
-
             <div>
               <button
                 type="submit"
@@ -124,7 +97,6 @@ export default function LoginPage() {
               </button>
             </div>
           </form>
-
           <p className="mt-8 text-center text-sm text-gray-500">
             Not a member?{' '}
             <a href="#" className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">

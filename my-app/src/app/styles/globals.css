@@ -1,24 +1,26 @@
+/* globals.css */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-
-
 body {
-    font-family: 'Roboto', sans-serif; /* Example: Set a global font-family */
-    background-color:black;
-  }
+  font-family: 'Roboto', sans-serif; 
   
-  img {
-    max-width: 100%; /* Ensure image doesn’t overflow container */
-    height: auto; /* Maintain aspect ratio */
-  }
+}
 
-  
-  .hero-section {
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-  }
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+.home-page{
+  background-color: black;  
+}
+
+.hero-section {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
