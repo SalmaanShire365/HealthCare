@@ -1,32 +1,43 @@
-// src/app/dashboard/employees/page.jsx (for example)
-
-'use client'; // Ensure this is a Client Component
-import Layout from '../components/Layout'; // Import Layout
+'use client';
+import Layout from '../components/Layout';
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 
 const EmployeesListPage = () => {
   const [employees, setEmployees] = useState([]);
+  const [loading, setLoading] = useState(true); // New state to track loading status
+  const [error, setError] = useState(null); // New state to handle errors
   const router = useRouter();
 
   // Fetch employees when the component mounts
   useEffect(() => {
     const fetchEmployees = async () => {
       try {
-        const res = await fetch('/api/employees');
-        const data = await res.json();
-        if (res.ok) {
-          setEmployees(data);
-        } else {
-          console.error('Failed to fetch employees:', data);
+        const res = await fetch('/api/employees'); // Fetch from the API endpoint
+        if (!res.ok) {
+          throw new Error('Failed to fetch employees');
         }
+        const data = await res.json(); // Parse JSON data
+        setEmployees(data); // Update the state with employee data
       } catch (error) {
-        console.error('Error fetching employees:', error);
+        setError(error.message); // Handle any errors
+      } finally {
+        setLoading(false); // Set loading to false after data fetching is complete
       }
     };
 
-    fetchEmployees();
+    fetchEmployees(); // Call the fetch function when component mounts
   }, []);
+
+  // If data is still loading, show a loading message
+  if (loading) {
+    return <Layout><div>Loading...</div></Layout>;
+  }
+
+  // If there is an error, display the error message
+  if (error) {
+    return <Layout><div>Error: {error}</div></Layout>;
+  }
 
   return (
     <Layout>
@@ -48,25 +59,39 @@ const EmployeesListPage = () => {
           <table className="min-w-full table-auto">
             <thead className="bg-emerald-500 text-white">
               <tr>
-                <th className="py-3 px-6 text-left">Employee Name</th>
-                <th className="py-3 px-6 text-left">Position</th>
-                <th className="py-3 px-6 text-left">Actions</th>
+                <th className="py-3 px-6 text-left">ID</th>
+                <th className="py-3 px-6 text-left">First Name</th>
+                <th className="py-3 px-6 text-left">Last Name</th>
+                <th className="py-3 px-6 text-left">Date of Birth</th>
+                <th className="py-3 px-6 text-left">Login Name</th>
+                <th className="py-3 px-6 text-left">Mobile #</th>
+                <th className="py-3 px-6 text-left">Address</th>
+                <th className="py-3 px-6 text-left">Aggregator</th>
+                <th className="py-3 px-6 text-left">OIG</th>
+                <th className="py-3 px-6 text-left">Action</th>
               </tr>
             </thead>
             <tbody>
               {employees.map((employee) => (
-                <tr key={employee.id} className="border-b">
-                  <td className="py-3 px-6">{employee.name}</td>
-                  <td className="py-3 px-6">{employee.position}</td>
+                <tr key={employee.id} className="border-b hover:bg-gray-50">
+                  <td className="py-3 px-6">{employee.id}</td>
+                  <td className="py-3 px-6">{employee.first_name}</td>
+                  <td className="py-3 px-6">{employee.last_name}</td>
+                  <td className="py-3 px-6">{employee.dob}</td>
+                  <td className="py-3 px-6">{employee.login_name}</td>
+                  <td className="py-3 px-6">{employee.mobile}</td>
+                  <td className="py-3 px-6">{employee.address}</td>
+                  <td className="py-3 px-6">{employee.aggregator || '-'}</td>
+                  <td className="py-3 px-6">{employee.oig || '-'}</td>
                   <td className="py-3 px-6">
                     <button
-                      onClick={() => alert(`Editing ${employee.name}`)}
+                      onClick={() => router.push(`/dashboard/employees/${employee.id}/edit`)}
                       className="text-emerald-500 hover:text-emerald-700 mr-4"
                     >
                       Edit
                     </button>
                     <button
-                      onClick={() => alert(`Deleting ${employee.name}`)}
+                      onClick={() => alert(`Deleting ${employee.first_name} ${employee.last_name}`)}
                       className="text-red-500 hover:text-red-700"
                     >
                       Delete
@@ -83,3 +108,4 @@ const EmployeesListPage = () => {
 };
 
 export default EmployeesListPage;
+

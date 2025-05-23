@@ -20,26 +20,7 @@ export default function LoginPage() {
       setError('Both email and password are required.');
       return;
     }
-
-    try {
-      const res = await fetch('/api/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, password }),
-      });
-
-      const data = await res.json();
-
-      if (res.ok) {
-        setSuccess('Login successful!');
-        // Redirect to dashboard on success
-        router.push('/dashboard');
-      } else {
-        setError(data.error || 'Something went wrong');
-      }
-    } catch (error) {
-      setError('Something went wrong with the request');
-    }
+    router.push('/dashboard');
   };
 
   return (

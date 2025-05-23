@@ -11,4 +11,3 @@ const ButtonBackgroundShine = () => {
   };
   
   export default ButtonBackgroundShine;
-  
